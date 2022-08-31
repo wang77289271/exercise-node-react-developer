@@ -63,7 +63,13 @@ const ReposList = ({ repos }) => {
             return (
               <tr className="repos_item" key={id}>
                 <td>{name}</td>
-                <td>{description}</td>
+                <td>
+                  {description === null ? (
+                    <span>No description</span>
+                  ) : (
+                    description
+                  )}
+                </td>
                 <td>{language}</td>
                 <td>{forks_count}</td>
               </tr>
