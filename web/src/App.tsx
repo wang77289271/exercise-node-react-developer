@@ -36,7 +36,7 @@ export function App() {
         <Router>
           <Routes>
             <Route path="/" element={<ReposList repos={repos} />} />
-            <Route path="/repo/:id" element={<Repo />} />
+            <Route path="/repo/:id" element={<Repo repos={repos} />} />
           </Routes>
         </Router>
       ) : (
