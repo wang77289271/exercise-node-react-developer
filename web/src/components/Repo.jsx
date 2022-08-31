@@ -1,12 +1,39 @@
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './style.css';
+import ReactMarkDown from 'markdown-to-jsx';
 
 const Repo = ({ repos }) => {
+  const [readme, setReadme] = useState('');
+  const [hasReadMe, setHasReadMe] = useState(false);
+  const [displayReadme, setDisplayReadme] = useState('none');
   const { id } = useParams();
   const repo = repos.find((r) => r.id === Number(id));
 
   const commitDate = (date) => {
     return new Date(date).toString().split('T')[0];
+  };
+
+  useEffect(() => {
+    if (repo) {
+      fetch(
+        `https://raw.githubusercontent.com/${repo.full_name}/master/README.md`
+      )
+        .then((res) => res.text())
+        .then((md) => {
+          setReadme(md);
+          setHasReadMe(true);
+        });
+    }
+  }, [repo]);
+
+  const toggleDisplayReadme = () => {
+    if (displayReadme === 'none') {
+      setDisplayReadme('block');
+    }
+    if (displayReadme === 'block') {
+      setDisplayReadme('none');
+    }
   };
 
   if (!repo) {
@@ -20,7 +47,17 @@ const Repo = ({ repos }) => {
         <p>Author: {repo.owner.login} </p>
         <p>Message: </p> {/* could not find the data for message... */}
       </div>
-      {/* if has readme */}
+      {hasReadMe ? (
+        <div className="markdown">
+          <button onClick={toggleDisplayReadme}>README.md</button>
+          <div className="markdown_content" style={{ display: displayReadme }}>
+            <ReactMarkDown children={readme} />
+          </div>
+        </div>
+      ) : (
+        <span>* No readme file</span>
+      )}
+
       <div className="repo_link">
         <Link to="/">Back to List</Link>
       </div>
