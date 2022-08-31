@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './style.css';
 
 const defaultLanguage = 'Select Language';
@@ -6,6 +7,7 @@ const defaultLanguage = 'Select Language';
 const ReposList = ({ repos }) => {
   const [reposData, setReposData] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState(defaultLanguage);
+  const navigate = useNavigate();
 
   // List repositories in reverse chronological order by creation date
   const newRepos = repos.sort((a, b) => {
@@ -35,6 +37,10 @@ const ReposList = ({ repos }) => {
     getList();
   }, [newRepos, selectedLanguage]);
 
+  const handleOnClick = (id) => {
+    navigate(`/repo/${id}`, { replace: true });
+  };
+
   return (
     <div className="repos_list">
       <div className="repos_select">
@@ -61,7 +67,11 @@ const ReposList = ({ repos }) => {
           {reposData.map((repo) => {
             const { id, name, description, language, forks_count } = repo;
             return (
-              <tr className="repos_item" key={id}>
+              <tr
+                className="repos_item"
+                key={id}
+                onClick={() => handleOnClick(id)}
+              >
                 <td>{name}</td>
                 <td>
                   {description === null ? (
@@ -82,4 +92,5 @@ const ReposList = ({ repos }) => {
 };
 
 export default ReposList;
-// Add buttons for each language type. Make clicking on a language button filter the list by language type
+// Make each repository in the list clickable
+// When you click a repository, display the most recent commit date, author, and message.
