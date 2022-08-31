@@ -17,7 +17,7 @@ export function App() {
       const res = await fetch(url);
       if (res.status === 200) {
         const data = await res.json();
-        setRepos(data);
+        setRepos(data.data);
       } else {
         throw new Error('error');
       }
@@ -29,14 +29,13 @@ export function App() {
   useEffect(() => {
     getData();
   }, []);
-  console.log(repos);
 
   return (
     <div className="App">
       {!isError ? (
         <Router>
           <Routes>
-            <Route path="/" element={<ReposList />} />
+            <Route path="/" element={<ReposList repos={repos} />} />
             <Route path="/repo" element={<Repo />} />
           </Routes>
         </Router>
