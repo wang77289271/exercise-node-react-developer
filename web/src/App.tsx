@@ -7,13 +7,23 @@ import { useEffect, useState } from 'react';
 
 export function App() {
   const [repos, setRepos] = useState([]);
+  const [isError, setIsError] = useState(false);
 
-  // fetch repository data from 'http://localhost:4000/repos'
+  // Fetch repository data from 'http://localhost:4000/repos'
+  // Check if the data is received successfully
   const url = 'http://localhost:4000/repos';
   const getData = async () => {
-    const res = await fetch(url);
-    const data = await res.json();
-    setRepos(data);
+    try {
+      const res = await fetch(url);
+      if (res.status === 200) {
+        const data = await res.json();
+        setRepos(data);
+      } else {
+        throw new Error('error');
+      }
+    } catch (err) {
+      setIsError(true);
+    }
   };
 
   useEffect(() => {
@@ -23,13 +33,16 @@ export function App() {
 
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<ReposList />} />
-          <Route path="/repo" element={<Repo />} />
-          <Route path="/error" element={<ErrorPage />} />
-        </Routes>
-      </Router>
+      {!isError ? (
+        <Router>
+          <Routes>
+            <Route path="/" element={<ReposList />} />
+            <Route path="/repo" element={<Repo />} />
+          </Routes>
+        </Router>
+      ) : (
+        <ErrorPage />
+      )}
     </div>
   );
 }
