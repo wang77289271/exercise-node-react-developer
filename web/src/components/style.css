@@ -1,0 +1,86 @@
+.repos_list {
+  width: 90%;
+  margin: auto;
+  text-align: left;
+}
+/* Select Options */
+.repos_select {
+  margin: 40px 0 20px 0;
+}
+.repos_select span {
+  font-size: 20px;
+}
+/* Table */
+.repos_list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.repos_list table th,
+.repos_list table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+.repos_list table th {
+  background-color: green;
+  color: #fff;
+  text-transform: capitalize;
+}
+.repos_item {
+  cursor: pointer;
+}
+.repos_item:nth-child(odd) {
+  background: #f2f2f2;
+}
+.repos_item:hover {
+  background-color: #808080;
+  color: #fff;
+}
+/* repo page */
+.repo {
+  width: 90%;
+  margin: auto;
+  text-align: left;
+}
+.markdown button {
+  padding: 8px 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.markdown_content {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+.repo_link a {
+  text-decoration: none;
+  padding: 8px 12px;
+  background-color: red;
+  color: #fff;
+  transition: all 0.2s;
+}
+.repo_link a:hover {
+  background-color: green;
+}
+/* Error page */
+.error {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.error button {
+  padding: 12px 20px;
+  margin: 20px 0;
+  border: none;
+  background-color: red;
+  color: #fff;
+  font-size: 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.error button:hover {
+  background-color: green;
+}

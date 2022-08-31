@@ -11,20 +11,27 @@ const Repo = ({ repos }) => {
   const repo = repos.find((r) => r.id === Number(id));
 
   const commitDate = (date) => {
-    return new Date(date).toString().split('T')[0];
+    return date.toString().split('T')[0];
   };
 
   useEffect(() => {
-    if (repo) {
-      fetch(
-        `https://raw.githubusercontent.com/${repo.full_name}/master/README.md`
-      )
-        .then((res) => res.text())
-        .then((md) => {
-          setReadme(md);
-          setHasReadMe(true);
-        });
-    }
+    const getData = async () => {
+      if (repo) {
+        try {
+          const res = await fetch(
+            `https://raw.githubusercontent.com/${repo.full_name}/master/README.md`
+          );
+          if (res.status === 200) {
+            const mdData = await res.text();
+            setReadme(mdData);
+            setHasReadMe(true);
+          }
+        } catch (err) {
+          throw new Error('error');
+        }
+      }
+    };
+    getData();
   }, [repo]);
 
   const toggleDisplayReadme = () => {
@@ -35,7 +42,6 @@ const Repo = ({ repos }) => {
       setDisplayReadme('none');
     }
   };
-
   if (!repo) {
     return <h1>Loading...</h1>;
   }
@@ -55,7 +61,7 @@ const Repo = ({ repos }) => {
           </div>
         </div>
       ) : (
-        <span>* No readme file</span>
+        <p>* No readme file found</p>
       )}
 
       <div className="repo_link">
