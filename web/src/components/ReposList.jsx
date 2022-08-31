@@ -1,6 +1,10 @@
 import './style.css';
 
 const ReposList = ({ repos }) => {
+  // List repositories in reverse chronological order by creation date
+  const newRepos = repos.sort((a, b) => {
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
   return (
     <div className="repos_list">
       <table>
@@ -11,7 +15,7 @@ const ReposList = ({ repos }) => {
             <th>language</th>
             <th>forks count</th>
           </tr>
-          {repos.map((repo) => {
+          {newRepos.map((repo) => {
             const { id, name, description, language, forks_count } = repo;
             return (
               <tr className="repos_item" key={id}>
@@ -29,3 +33,4 @@ const ReposList = ({ repos }) => {
 };
 
 export default ReposList;
+// The list of repositories should be displayed in reverse chronological order by creation date.
