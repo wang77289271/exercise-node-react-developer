@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const repos = Router();
 
-const url = 'https://api.github.com/users/silverorange/reposasdf';
+const url = 'https://api.github.com/users/silverorange/repos';
 
 repos.get('/', async (_: Request, res: Response) => {
   res.header('Cache-Control', 'no-store');
